@@ -1,15 +1,15 @@
 #Задача 1. Написать функцию pow(a, n::Integer), возвращающую значение a^n, и реализующую алгоритм быстрого возведения в степень.
 
 function binpow(a, n::Integer)
-    k = n
+   q = n
     t = 1
     p = a
-    while k > 0
-        if (mod(k,2)==0) # если степень четная
-            k/=n
+    while q > 0
+        if (mod(q,2)==0) # если степень четная
+            q/=n
             p*=p
         else            # если степень нечетная
-            k-=1
+           q-=1
             t*=p
         end   
     end
@@ -21,7 +21,7 @@ end
 
 function fibonacci(n::Integer)
     a = b = c = 1
-    f1,f2,f3 = 0,1,1
+    f1,f2,f3 = 0, 1, 1
     fib_n = 0
     counter = 3
     while (n>counter)
@@ -65,12 +65,12 @@ end
 #в противном случае. При этом следует иметь ввиду, что число 1 простым не считается.
 
 function isprime(n::Int)::Bool
-    d=2
-    while (d*d<=n)  #проверяем все целые числа, чьи квадраты меньше n
+    a=2
+    while (a*a<=n)  #проверяем все целые числа, чьи квадраты меньше n
         if (n%d==0) 
             return false
         end
-        d+=1
+       a+=1
     end
     return true
 end
