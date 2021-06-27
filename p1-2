@@ -2,13 +2,13 @@
 #назвав её, например, reverse_user!, для следующих случаев: 
 
 # a) аргумент функции - вектор
-function reverse_user!(array) 
-    n = length(array)
-    array = array[n:-1:1] 
+function reverse_user!(arr) 
+    n = length(arr)
+    arr = arr[n:-1:1] 
 end
 
-function reverse_user(array)
-    return reverse_user!(deepcopy(array))
+function reverse_user(arr)
+    return reverse_user!(deepcopy(arr))
 end
 
 # б) аргумент функции - матрица (2-мерный массив)
@@ -25,10 +25,10 @@ end
 #Задача 2: Аналогично, реализовать функцию, аналогичную встроенной функции copy для следующих случаев: 
 # a) аргумент функции - вектор
 
-function copy_user!(array)
-    New_vector_zero = zero(length(array)) #Обнуляем вектор
-    for i in 1:length(array)
-        New_vector_zero[i] = array[i] #копируем значения в новый вектор
+function copy_user!(arr)
+    New_vector_zero = zero(length(arr)) #Обнуляем вектор
+    for i in 1:length(arr)
+        New_vector_zero[i] = arr[i] #копируем значения в новый вектор
     end
     return New_vector_zero #возвращаем новый вектор
 end
@@ -112,8 +112,8 @@ end
 #Имена функций оставить прежними, что были и в пункте 1, воспользовавшись механизмом множественной диспетчеризации языка Julia.
 
     function bubblesort!(M::Matrix)::Matrix
-        array = view(M,:,1)
-        n = length(array)
+        arr = view(M,:,1)
+        n = length(arr)
         for i in size(i,n-1) 
             bubblesort!(view(M,:,i)) #сортируем выбранный столбец
         end
@@ -124,8 +124,8 @@ end
 
     function bubblesortperm!(M::Matrix)::Matrix
         index = Matrix{double}(undef,size(M))  #создание матрицы типа double
-        array = view(M,:,1)
-        n = length(array)
+        arr = view(M,:,1)
+        n = length(arr)
         for i in size(A,n-1)
             index[:,i] = bubblesortperm!(view(M,:,i)) 
         end
@@ -248,7 +248,7 @@ end
 
 #Задача 12: Дополнить функцию insertsort! процедурой "быстрого поиска"
 
-function binary_search(num::Int,ptr::Array)
+function binary_search(num::Int,ptr::Arr)
     left = 1
     right = length(ptr)
     while (left<=right)
