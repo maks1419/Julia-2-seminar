@@ -3,11 +3,11 @@
 #т.е. иметь асимптотическую оценку вычислительной сложности O(n).
 
 function find_all_max(a)
-    i_max=[firstindex(a)]
-    for i in firstindex(a)+1:lastindex(a)
-        if A[i]>A[i_max[end]] # # Если вдруг нашли число большее нашего текущего максимума
+    i_max=[first(a)]
+    for i in first(a)+1:lastindex(a)
+        if A[i]>A[i_max[end]] 
             i_max=[i]
-        elseif A[i]==A[i_max[end]] # Если нашли еще один максимум
+        elseif A[i]==A[i_max[end]] 
             push!(i_max, i)
         end
     end
@@ -17,10 +17,10 @@ end
 #Задачи 2-3. Реализовать эти две разновидности пузырьковой сортировки.
 
 function shenker!(a)
-    len = length(a) # длина массива  
-    flag = true     #создаем флаг
-    first_index = 1 # перый индекс массива
-    end_index = len - 1 # последний индекс массива
+    len = length(a) 
+    flag = true     
+    first_index = 1 
+    end_index = len - 1 
 
     while (flag == true)
         flag = false  
@@ -61,9 +61,9 @@ function shellsort!(a)
     distseries=(n÷2^i for i in 1:Int(floor(log2(n)))) 
     # distseries - это ГЕНЕРАТОР последовательности промежутков (т.е. члены этой последовательности будут вычисляться в процессе выполнения следующего цикла, заранее в памяти они не размещаются, как было бы при использовании массива или кортежа вместо генератора)
     for d in distseries
-        for i in firstindex(a):lastindex(a)-d
+        for i in first(a):lastindex(a)-d
             j=i
-            while j>=firstindex(a) && a[j]>a[j+d]
+            while j>=first(a) && a[j]>a[j+d]
                 a[j],a[j+d] = a[j+d],a[j]
                 j-=d
             end
