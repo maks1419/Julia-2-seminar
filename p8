@@ -35,7 +35,7 @@ end
 
 #Задача 5. Написать функцию, реализующую вычисление k-ой порядковой статистики, и - (на её основе) функции, вычисляющую медиану.
 function print_k_statistics(ptr::Array)::Array
-    mediana = None
+    med = None
     num = None
     if !length(ptr)
         print("Empty")
@@ -43,12 +43,12 @@ function print_k_statistics(ptr::Array)::Array
         num = length(ptr)
         num_1 = (num - 1) // 2
         if num % 2 == 0
-            mediana = (ptr[num_1] + ptr[num_1 + 1]) / 2 
+            med = (ptr[num_1] + ptr[num_1 + 1]) / 2 
         else
-            mediana = ptr[num_1]
+            med = ptr[num_1]
         end
     end
         print(f"Длина - " << num << "Среднее - " << sum(ptr) / num )
         print(f"Минимальное значение -" << min(ptr) << ", Максимальное значение - " << max(ptr))
-        print(f"Медиана - " << mediana)
+        print(f"Медиана - " << med)
 end
