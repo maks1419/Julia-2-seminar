@@ -14,7 +14,7 @@ function merge(A,B) # а) merge(A,B) - возвращает массив C
             end
         end
 
-        for j in i:length(B) # заполняем массив С оставшимися элементами из массива B
+        for j in i:length(B) 
             C[j] = B[j]
         end
 
@@ -85,13 +85,13 @@ function partsort_a(A,b)
     a1 = a2 = a3 = 1
 
     for i in 1:length(A)
-        if b > A[i]     # заполняем массив А1 всмеми элементами в массиве А, которые меньше b
+        if b > A[i]     
             A1[a1] = A[i]
             a1 += 1
-        elseif b == A[i] # заполняем массив А1 всмеми элементами в массиве А, которые равны b
+        elseif b == A[i] 
             A2[a2] = A[i]
             a2 += 1
-        else                # заполняем массив А1 всмеми элементами в массиве А, которые больше b
+        else              
             A3[a3] = A[i]
             a3 += 1
         end
@@ -107,13 +107,13 @@ function  partsort_b(A,b)
     l = 0
     m = 1
     k = length(A)
-    for i in 1:length(A)  # находим кол-во элементов, которые меньше b
+    for i in 1:length(A) 
         if A[i] < b
             l += 1
     end
 
     while m != length(A) || check_sort(A,b) == false # сортируем массив
-        if A[mod(m,length(A))] == b                                                                # берем остаток от деления на длинну массива, т.к можем не отсортировать массив с одного захода
+        if A[mod(m,length(A))] == b                  # берем остаток от деления на длинну массива, т.к можем не отсортировать массив с одного захода
             A[mod(m,length(A))],A[mod(m,length(A))+1] = A[mod(m,length(A))+1],A[mod(m,length(A))] 
             m += 1
         end
