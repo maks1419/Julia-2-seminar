@@ -4,7 +4,7 @@
 
 function find_all_max(a)
     i_max=[first(a)]
-    for i in first(a)+1:lastindex(a)
+    for i in first(a)+1:last(a)
         if A[i]>A[i_max[end]] 
             i_max=[i]
         elseif A[i]==A[i_max[end]] 
@@ -39,7 +39,7 @@ function shenker!(a)
 
         flag = false
 
-        end_index = last - 1 
+        last = last - 1 
 
         # проход c конца
         for i in (last - 1):-1:(first - 1)
