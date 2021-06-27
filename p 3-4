@@ -19,14 +19,14 @@ end
 function shenker!(a)
     len = length(a) 
     flag = true     
-    first_index = 1 
-    end_index = len - 1 
+    first = 1 
+    last = len - 1 
 
     while (flag == true)
         flag = false  
 
         # проход сначала 
-        for i in first_index : end_index
+        for i in first : last
             if (a[i] > a[i + 1])                  # Если выбранные элементы стоят не по возрастанию
                 a[i] , a[i + 1] = a[i + 1] , a[i] # то меняем их местами
                 flag = true
@@ -39,17 +39,17 @@ function shenker!(a)
 
         flag = false
 
-        end_index = end_index - 1 
+        end_index = last - 1 
 
         # проход c конца
-        for i in (end_index - 1):-1:(first_index - 1)
+        for i in (last - 1):-1:(first - 1)
             if (a[i] > a[i + 1])                         # Если выбранные элементы стоят не по возрастанию
                 a[i] , a[i + 1] = a[i + 1] , a[i]       # то меняем их местами
                 flag = true
             end
         end
 
-        first_index+= 1
+        first+= 1
     end
 
     return a # возвращаем видоизмененный массив
