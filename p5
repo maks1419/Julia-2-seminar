@@ -1,0 +1,125 @@
+function eval_poly(x,A)
+    Q = first(A)
+    for a in @view A[2:end]
+        Q=Q*x+a
+    end
+    return Q
+end
+
+module Polynoms
+    export Polynom, +, *, diff, integral, eval_poly
+
+    import Base: +, *, diff 
+
+    
+
+    mutable struct Polynom{T}
+        coeff::Vector{T}
+    end
+
+    function +(p::Polynom, q::Polynom)
+        np,nq = length(p.coeff), length(q.coeff)
+        r=Vector{promote_type(eltype(p),eltype(q))}(undef,max(np,nq))
+        if np >= nq
+            r .= (@view p.coeff[end-nq+1:end]) .+ q.coeff  
+        else
+            r .= (@view q.coeff[end-np+1:end]) .+ p.coeff
+        end
+        return Polynom(r)
+    end
+    function +(p::Polynom, c::Number)
+        coeff=p.coeff
+        coeff[end]+=c
+        return Polynom(coeff)
+    end
+
+    +(c::Number, p::Polynom)=p+c
+
+    function *(p::Polynom, q::Polynom)
+        np,nq = length(p.coeff), length(q.coeff)
+        coeff=zeros(promote_type(eltype(p),eltype(q)), np+nq-1)
+        for i in eachindex(p.coeff), j in eachindex(q)
+            coeff[i+j-1] += p.coeff[i]*q.coeff[j]
+        end
+        return Polynom(coeff)
+    end
+
+    function *(p::Polynom, c::Number)
+        np,nq = length(p.coeff), length(q.coeff)
+        coeff=zeros(promote_type(eltype(p),typeof(c)), length(p))
+        for i in eachindex(p.coeff)
+            coeff[i] += coeff[i]*c
+        end
+        return Polynom(coeff)
+    end
+    function diff(p::Polynom{T}) where T
+        coeff=Vector{T}(undef, length(p.coeff)-1)
+        n = length(coeff)
+        for i in 1:n
+            coeff[i] = p.coeff[i]
+            power = n - i + 1
+            coeff[i] *= power
+        end
+        return Polynom(coeff)
+    end
+    function integral(p::Polynom{T}) where T
+        coeff=Vector{T}(undef, length(p.coeff)+1)
+        n = length(p.coeff)
+        for i in 1:n
+            coeff[i] = p.coeff[i]
+            power = n - i + 1
+            coeff[i] = coeff[i] / power
+        end
+        return Polynom(coeff)
+    end
+    
+    *(c::Number, p::Polynom) = p*c
+
+
+(p::Polynom)(x) = eval_poly(x,p.coeff)
+
+function evaldiffpoly(x,A)
+    derivative=0
+    polynom=0
+    for a in A
+        derivative = derivative*x + polynom
+        polynom = polynom*x + a
+        # println(a, ": ", polynom, " ", derivative)
+    end
+    return derivative,polynom
+end
+function evaldiffpoly_k(x,A,k)
+
+end
+function quotientandremainder(a::AbstractVector{T},b::AbstractVector{T}) where {T <: Union{Rational, AbstractFloat}}
+    a1 = copy(a)
+    b1 = copy(b)
+    if length(a1) < length(b1) || (length(a1) == length(b1) && a1[1] < b1[1])
+        a1, b1=b1, a1
+    end
+    q = []
+    r = []
+    lq = length(a) - length(b)
+    i = 1
+    while true
+        for j in i:i+length(b)
+            #println(i, " ", j, " ", a1[j]/b1[j])
+            append!(q, a1[j]//b1[j])
+            a1[j] -= (a1[j]//b1[j])
+            #println(a1, b1)
+            if j == length(a)
+                break
+            end
+        end
+        i += 1
+    end
+    r = a1
+    arr = [q,r]
+    return arr
+end
+function /(p::Polynom, q::Polynom)
+    return (quotientandremainder(p, q))[1]
+end
+function %(p::Polynom, q::Polynom)
+    return (quotientandremainder(p, q))[2]
+end
